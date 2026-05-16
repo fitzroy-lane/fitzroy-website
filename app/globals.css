@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --charcoal: #231F20;
+  --stone: #B9AC9C;
+  --sage: #5E685F;
+  --cream: #F7F5F2;
+  --sand: #D8CBB8;
+  --taupe: #706248;
+  --olive: #7A8172;
+  --mushroom: #CFC6BB;
+  --bronze: #9B7B5A;
+  --clay: #A06D5D;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-fitzroy-cream text-fitzroy-charcoal font-inter;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-playfair;
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn-primary {
+    @apply inline-block bg-fitzroy-sage text-white font-inter font-medium px-6 py-3
+           hover:bg-fitzroy-olive transition-colors duration-200 tracking-wide text-sm uppercase;
+  }
+
+  .btn-outline {
+    @apply inline-block border border-fitzroy-charcoal text-fitzroy-charcoal font-inter font-medium px-6 py-3
+           hover:bg-fitzroy-charcoal hover:text-fitzroy-cream transition-colors duration-200 tracking-wide text-sm uppercase;
+  }
+
+  .btn-outline-light {
+    @apply inline-block border border-fitzroy-cream text-fitzroy-cream font-inter font-medium px-6 py-3
+           hover:bg-fitzroy-cream hover:text-fitzroy-charcoal transition-colors duration-200 tracking-wide text-sm uppercase;
+  }
+
+  .section-label {
+    @apply text-fitzroy-bronze font-inter text-xs uppercase tracking-[0.2em] font-medium;
+  }
+
+  .dietary-badge {
+    @apply inline-block text-[10px] font-inter font-semibold tracking-wider px-1.5 py-0.5
+           border border-fitzroy-stone text-fitzroy-taupe;
+  }
+
+  .price-tag {
+    @apply font-playfair text-fitzroy-taupe;
+  }
+}
