@@ -62,7 +62,7 @@ export default async function RootLayout({
                 {settings.promotionBanner}
               </div>
             )}
-            <Navbar />
+            <Navbar hasPromoBanner={!!settings?.promotionBanner} />
           </>
         )}
         <main>{children}</main>

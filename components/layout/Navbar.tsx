@@ -11,7 +11,11 @@ const navLinks = [
   { href: '/about', label: 'About' },
 ]
 
-export default function Navbar() {
+interface NavbarProps {
+  hasPromoBanner?: boolean
+}
+
+export default function Navbar({ hasPromoBanner = false }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
@@ -23,7 +27,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const transparent = isHome && !scrolled && !menuOpen
+  const transparent = isHome && !scrolled && !menuOpen && !hasPromoBanner
 
   return (
     <header
