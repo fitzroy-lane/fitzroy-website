@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { Mail, Phone, MapPin } from 'lucide-react'
 import PageHeader from '@/components/ui/PageHeader'
 import EnquiryForm from '@/components/ui/EnquiryForm'
 import { sanityFetch } from '@/lib/sanity'
@@ -38,18 +39,18 @@ export default async function ContactPage() {
               <div>
                 <h3 className="font-playfair text-xl text-fitzroy-charcoal mb-4">Contact Details</h3>
                 <ul className="space-y-3 font-inter text-sm text-fitzroy-taupe">
-                  <li className="flex gap-3">
-                    <span className="text-fitzroy-bronze shrink-0 mt-0.5">✉</span>
+                  <li className="flex gap-3 items-start">
+                    <Mail className="w-4 h-4 text-fitzroy-bronze shrink-0 mt-0.5" strokeWidth={1.5} />
                     <a href={`mailto:${email}`} className="hover:text-fitzroy-charcoal transition-colors">{email}</a>
                   </li>
                   {phone && (
-                    <li className="flex gap-3">
-                      <span className="text-fitzroy-bronze shrink-0 mt-0.5">✆</span>
+                    <li className="flex gap-3 items-start">
+                      <Phone className="w-4 h-4 text-fitzroy-bronze shrink-0 mt-0.5" strokeWidth={1.5} />
                       <a href={`tel:${phone}`} className="hover:text-fitzroy-charcoal transition-colors">{phone}</a>
                     </li>
                   )}
-                  <li className="flex gap-3">
-                    <span className="text-fitzroy-bronze shrink-0 mt-0.5">⊙</span>
+                  <li className="flex gap-3 items-start">
+                    <MapPin className="w-4 h-4 text-fitzroy-bronze shrink-0 mt-0.5" strokeWidth={1.5} />
                     <span>{address}</span>
                   </li>
                 </ul>

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { Building2, PartyPopper, Users } from 'lucide-react'
 import HeroSection from '@/components/ui/HeroSection'
 import { CorporatePackageCard } from '@/components/ui/PackageCard'
 import { sanityFetch, urlFor } from '@/lib/sanity'
@@ -35,29 +36,29 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-fitzroy-stone/20">
             {[
               {
-                icon: '🏢',
+                Icon: Building2,
                 title: 'Corporate Catering',
                 desc: 'Office lunches, meetings, staff events, and workplace birthday celebrations. Recurring packages available.',
                 href: '/corporate',
               },
               {
-                icon: '🎉',
+                Icon: PartyPopper,
                 title: 'Private Events',
                 desc: 'Birthdays, family gatherings, engagements, and celebrations. Flexible packages with optional setup and styling.',
                 href: '/packages',
               },
               {
-                icon: '🤝',
+                Icon: Users,
                 title: 'Community & Sports',
                 desc: 'Sporting clubs, community organisations, school events, and not-for-profit functions. Large-volume solutions.',
                 href: '/contact',
               },
-            ].map((pillar) => (
-              <Link key={pillar.title} href={pillar.href}
+            ].map(({ Icon, title, desc, href }) => (
+              <Link key={title} href={href}
                 className="bg-fitzroy-charcoal p-8 lg:p-10 group hover:bg-fitzroy-charcoal/80 transition-colors">
-                <div className="text-3xl mb-4">{pillar.icon}</div>
-                <h3 className="font-playfair text-xl text-fitzroy-cream mb-3">{pillar.title}</h3>
-                <p className="font-inter text-sm text-fitzroy-stone leading-relaxed">{pillar.desc}</p>
+                <Icon className="w-7 h-7 text-fitzroy-bronze mb-5" strokeWidth={1.5} />
+                <h3 className="font-playfair text-xl text-fitzroy-cream mb-3">{title}</h3>
+                <p className="font-inter text-sm text-fitzroy-stone leading-relaxed">{desc}</p>
                 <p className="font-inter text-xs text-fitzroy-bronze mt-4 group-hover:text-fitzroy-sand transition-colors tracking-wide">
                   Learn more →
                 </p>

@@ -7,7 +7,7 @@ interface PageHeaderProps {
 
 export default function PageHeader({ label, title, subtitle, light = false }: PageHeaderProps) {
   return (
-    <div className={`py-16 lg:py-20 ${light ? 'bg-fitzroy-cream' : 'bg-fitzroy-charcoal'}`}>
+    <div className={`pt-36 lg:pt-44 pb-16 lg:pb-20 ${light ? 'bg-fitzroy-cream' : 'bg-fitzroy-charcoal'}`}>
       <div className="container-site text-center">
         {label && (
           <p className={`section-label mb-3 ${light ? '' : 'text-fitzroy-stone'}`}>{label}</p>

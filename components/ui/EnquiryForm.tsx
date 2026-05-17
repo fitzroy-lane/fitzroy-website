@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import { CheckCircle } from 'lucide-react'
 import { submitEnquiry } from '@/app/contact/actions'
 
 const INTEREST_OPTIONS = [
@@ -41,7 +42,7 @@ export default function EnquiryForm() {
   if (success) {
     return (
       <div className="bg-fitzroy-sand/30 border border-fitzroy-sand p-8 text-center">
-        <div className="text-3xl mb-3">✓</div>
+        <CheckCircle className="w-10 h-10 text-fitzroy-sage mx-auto mb-3" strokeWidth={1.5} />
         <h3 className="font-playfair text-xl text-fitzroy-charcoal mb-2">Enquiry Received</h3>
         <p className="font-inter text-fitzroy-taupe text-sm">
           Thank you — we&apos;ll be in touch within 24 hours to discuss your event.
