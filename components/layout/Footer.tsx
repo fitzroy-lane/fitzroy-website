@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { SiteSettings } from '@/lib/types'
 
 interface FooterProps {
@@ -6,6 +9,9 @@ interface FooterProps {
 }
 
 export default function Footer({ settings }: FooterProps) {
+  const pathname = usePathname()
+  if (pathname?.startsWith('/studio')) return null
+
   const email = settings?.email || 'catering@fitzroylane.com'
   const phone = settings?.phone
   const address = settings?.address || 'Seven Hills, NSW'

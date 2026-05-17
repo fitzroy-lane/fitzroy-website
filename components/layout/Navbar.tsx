@@ -13,9 +13,10 @@ const navLinks = [
 
 interface NavbarProps {
   hasPromoBanner?: boolean
+  promoBannerText?: string
 }
 
-export default function Navbar({ hasPromoBanner = false }: NavbarProps) {
+export default function Navbar({ hasPromoBanner = false, promoBannerText }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
@@ -27,13 +28,21 @@ export default function Navbar({ hasPromoBanner = false }: NavbarProps) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  if (pathname?.startsWith('/studio')) return null
+
   const transparent = isHome && !scrolled && !menuOpen && !hasPromoBanner
 
   return (
+    <>
+      {promoBannerText && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-fitzroy-bronze text-fitzroy-cream text-center font-inter text-xs py-2 px-4 tracking-wide">
+          {promoBannerText}
+        </div>
+      )}
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        transparent ? 'bg-transparent' : 'bg-fitzroy-charcoal shadow-md'
-      }`}
+      className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
+        promoBannerText ? 'top-8' : 'top-0'
+      } ${transparent ? 'bg-transparent' : 'bg-fitzroy-charcoal shadow-md'}`}
     >
       <div className="container-site">
         <div className="flex items-center justify-between h-16 lg:h-20">
@@ -113,5 +122,6 @@ export default function Navbar({ hasPromoBanner = false }: NavbarProps) {
         </div>
       )}
     </header>
+    </>
   )
 }

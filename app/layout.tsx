@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
-import { headers } from 'next/headers'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Navbar from '@/components/layout/Navbar'
@@ -42,31 +41,20 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const pathname = headers().get('x-pathname') || ''
-  const isStudio = pathname.startsWith('/studio')
-
-  const settings = isStudio
-    ? null
-    : await sanityFetch<SiteSettings>({
-        query: SITE_SETTINGS_QUERY,
-        revalidate: 300,
-      }).catch(() => null)
+  const settings = await sanityFetch<SiteSettings>({
+    query: SITE_SETTINGS_QUERY,
+    revalidate: 300,
+  }).catch(() => null)
 
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <body>
-        {!isStudio && (
-          <>
-            {settings?.promotionBanner && (
-              <div className="bg-fitzroy-charcoal text-fitzroy-sand text-center py-2 px-4 text-xs font-inter tracking-wider">
-                {settings.promotionBanner}
-              </div>
-            )}
-            <Navbar hasPromoBanner={!!settings?.promotionBanner} />
-          </>
-        )}
+        <Navbar
+          hasPromoBanner={!!settings?.promotionBanner}
+          promoBannerText={settings?.promotionBanner}
+        />
         <main>{children}</main>
-        {!isStudio && <Footer settings={settings} />}
+        <Footer settings={settings} />
         <Analytics />
         <SpeedInsights />
       </body>
