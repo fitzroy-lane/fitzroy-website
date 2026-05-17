@@ -34,10 +34,10 @@ export default function HeroSection({ settings }: HeroSectionProps) {
       <div className="relative container-site w-full pt-32 pb-20 lg:pt-40 lg:pb-32">
         <div className="max-w-xl">
           <p className="section-label text-fitzroy-sand mb-4">Western Sydney Catering</p>
-          <h1 className="font-playfair text-4xl sm:text-5xl lg:text-6xl text-fitzroy-cream leading-tight mb-6">
+          <h1 className="font-playfair text-4xl sm:text-5xl lg:text-6xl text-fitzroy-cream leading-tight mb-6 [text-shadow:0_2px_16px_rgba(0,0,0,0.5)]">
             {title}
           </h1>
-          <p className="font-inter text-fitzroy-mushroom text-base lg:text-lg leading-relaxed mb-8 max-w-md">
+          <p className="font-inter text-fitzroy-cream/80 text-base lg:text-lg leading-relaxed mb-8 max-w-md [text-shadow:0_1px_8px_rgba(0,0,0,0.4)]">
             {subtitle}
           </p>
           <div className="flex flex-wrap gap-3">
@@ -57,8 +57,8 @@ export default function HeroSection({ settings }: HeroSectionProps) {
               { label: 'Corporate & Private', sub: 'Events' },
             ].map((item) => (
               <div key={item.label}>
-                <p className="font-playfair text-fitzroy-cream text-sm">{item.label}</p>
-                <p className="font-inter text-fitzroy-stone/70 text-xs mt-0.5">{item.sub}</p>
+                <p className="font-playfair text-fitzroy-cream text-sm [text-shadow:0_1px_6px_rgba(0,0,0,0.5)]">{item.label}</p>
+                <p className="font-inter text-fitzroy-stone text-xs mt-0.5">{item.sub}</p>
               </div>
             ))}
           </div>

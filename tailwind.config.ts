@@ -25,7 +25,7 @@ const config: Config = {
         'inter': ['var(--font-inter)', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
-        'hero-gradient': 'linear-gradient(to right, rgba(35,31,32,0.80) 0%, rgba(35,31,32,0.55) 45%, transparent 80%)',
+        'hero-gradient': 'linear-gradient(to right, rgba(35,31,32,0.92) 0%, rgba(35,31,32,0.75) 40%, rgba(35,31,32,0.30) 70%, transparent 90%)',
         'hero-gradient-mobile': 'linear-gradient(to bottom, rgba(35,31,32,0.30) 0%, rgba(35,31,32,0.75) 60%)',
       },
     },
