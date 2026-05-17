@@ -15,6 +15,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
+  const isHome = pathname === '/'
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -22,16 +23,12 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  if (pathname?.startsWith('/studio')) return null
-
-  const isHome = pathname === '/'
+  const transparent = isHome && !scrolled && !menuOpen
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled || !isHome || menuOpen
-          ? 'bg-fitzroy-charcoal shadow-md'
-          : 'bg-transparent'
+        transparent ? 'bg-transparent' : 'bg-fitzroy-charcoal shadow-md'
       }`}
     >
       <div className="container-site">
