@@ -12,11 +12,10 @@ const navLinks = [
 ]
 
 interface NavbarProps {
-  hasPromoBanner?: boolean
   promoBannerText?: string
 }
 
-export default function Navbar({ hasPromoBanner = false, promoBannerText }: NavbarProps) {
+export default function Navbar({ promoBannerText }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
@@ -30,7 +29,7 @@ export default function Navbar({ hasPromoBanner = false, promoBannerText }: Navb
 
   if (pathname?.startsWith('/studio')) return null
 
-  const transparent = isHome && !scrolled && !menuOpen && !hasPromoBanner
+  const transparent = isHome && !scrolled && !menuOpen
 
   return (
     <>

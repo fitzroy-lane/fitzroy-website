@@ -49,10 +49,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <body>
-        <Navbar
-          hasPromoBanner={!!settings?.promotionBanner}
-          promoBannerText={settings?.promotionBanner}
-        />
+        <Navbar promoBannerText={settings?.promotionBanner} />
         <main>{children}</main>
         <Footer settings={settings} />
         <Analytics />
