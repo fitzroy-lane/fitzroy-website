@@ -1,4 +1,8 @@
+'use client'
+
+import { Plus, Check } from 'lucide-react'
 import { MenuItem } from '@/lib/types'
+import { useQuote } from '@/contexts/QuoteContext'
 
 interface MenuSectionProps {
   title: string
@@ -14,6 +18,8 @@ const DIETARY_LABELS: Record<string, string> = {
 }
 
 export default function MenuSection({ title, items, note }: MenuSectionProps) {
+  const { addItem, removeItem, isInQuote } = useQuote()
+
   if (items.length === 0) return null
 
   return (
@@ -24,27 +30,58 @@ export default function MenuSection({ title, items, note }: MenuSectionProps) {
         {note && <p className="font-inter text-xs text-fitzroy-stone whitespace-nowrap">{note}</p>}
       </div>
       <div className="divide-y divide-fitzroy-sand">
-        {items.map((item) => (
-          <div key={item._id} className="py-4 flex items-start justify-between gap-4">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-start gap-2 flex-wrap">
-                <span className="font-inter font-medium text-fitzroy-charcoal text-sm leading-snug">{item.name}</span>
-                {item.dietary?.map((d) => (
-                  <span key={d} className="dietary-badge">{DIETARY_LABELS[d] ?? d}</span>
-                ))}
+        {items.map((item) => {
+          const inQuote = isInQuote(item._id)
+          return (
+            <div key={item._id} className="py-4 flex items-start justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start gap-2 flex-wrap">
+                  <span className="font-inter font-medium text-fitzroy-charcoal text-sm leading-snug">
+                    {item.name}
+                  </span>
+                  {item.dietary?.map((d) => (
+                    <span key={d} className="dietary-badge">{DIETARY_LABELS[d] ?? d}</span>
+                  ))}
+                </div>
+                {item.description && (
+                  <p className="font-inter text-xs text-fitzroy-stone mt-1 leading-relaxed">
+                    {item.description}
+                  </p>
+                )}
+                {item.quantity && (
+                  <p className="font-inter text-xs text-fitzroy-stone/70 mt-0.5">{item.quantity}</p>
+                )}
               </div>
-              {item.description && (
-                <p className="font-inter text-xs text-fitzroy-stone mt-1 leading-relaxed">{item.description}</p>
-              )}
-              {item.quantity && (
-                <p className="font-inter text-xs text-fitzroy-stone/70 mt-0.5">{item.quantity}</p>
-              )}
+              <div className="flex items-center gap-3 shrink-0">
+                <span className="font-playfair text-fitzroy-charcoal text-lg">${item.price}</span>
+                <button
+                  onClick={() =>
+                    inQuote
+                      ? removeItem(item._id)
+                      : addItem({
+                          id: item._id,
+                          name: item.name,
+                          price: item.price,
+                          quantity: item.quantity,
+                        })
+                  }
+                  aria-label={inQuote ? `Remove ${item.name} from quote` : `Add ${item.name} to quote`}
+                  className={`w-7 h-7 flex items-center justify-center border transition-colors duration-150 ${
+                    inQuote
+                      ? 'bg-fitzroy-sage border-fitzroy-sage text-white'
+                      : 'border-fitzroy-sand text-fitzroy-stone hover:border-fitzroy-sage hover:text-fitzroy-sage'
+                  }`}
+                >
+                  {inQuote ? (
+                    <Check className="w-3.5 h-3.5" strokeWidth={2.5} />
+                  ) : (
+                    <Plus className="w-3.5 h-3.5" strokeWidth={2} />
+                  )}
+                </button>
+              </div>
             </div>
-            <div className="text-right shrink-0">
-              <span className="font-playfair text-fitzroy-charcoal text-lg">${item.price}</span>
-            </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )

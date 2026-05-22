@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -46,13 +47,15 @@ export default function Navbar({ promoBannerText }: NavbarProps) {
       <div className="container-site">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link href="/" className="flex flex-col leading-none" onClick={() => setMenuOpen(false)}>
-            <span className="font-playfair text-fitzroy-cream text-xl lg:text-2xl tracking-wide">
-              Fitzroy
-            </span>
-            <span className="font-inter text-fitzroy-stone text-[10px] uppercase tracking-[0.3em]">
-              Catering
-            </span>
+          <Link href="/" onClick={() => setMenuOpen(false)}>
+            <Image
+              src="/logos/logo-white.png"
+              alt="Fitzroy Catering"
+              width={140}
+              height={56}
+              className="h-10 w-auto lg:h-12"
+              priority
+            />
           </Link>
 
           {/* Desktop nav */}

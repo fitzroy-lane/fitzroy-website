@@ -15,6 +15,7 @@ export async function submitEnquiry(formData: FormData) {
   const guestCount = formData.get('guestCount') as string
   const deliveryAddress = formData.get('deliveryAddress') as string
   const interests = formData.getAll('interests') as string[]
+  const selectedItems = formData.get('selectedItems') as string | null
   const message = formData.get('message') as string
 
   if (!fullName || !email || !phone || !eventDate || !guestCount || !deliveryAddress) {
@@ -44,7 +45,7 @@ Guest Count: ${guestCount}
 
 INTERESTED IN
 ${interests.length > 0 ? interests.map((i) => `• ${i}`).join('\n') : 'Not specified'}
-
+${selectedItems ? `\nSELECTED MENU ITEMS\n${selectedItems.split('\n').map((i) => `• ${i}`).join('\n')}` : ''}
 ADDITIONAL DETAILS
 ${message || 'None provided'}
 

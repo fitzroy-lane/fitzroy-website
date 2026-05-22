@@ -4,6 +4,8 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import Providers from '@/components/Providers'
+import QuoteBar from '@/components/ui/QuoteBar'
 import { sanityFetch } from '@/lib/sanity'
 import { SITE_SETTINGS_QUERY } from '@/lib/queries'
 import { SiteSettings } from '@/lib/types'
@@ -94,7 +96,10 @@ export default async function RootLayout({
       </head>
       <body>
         <Navbar promoBannerText={settings?.promotionBanner} />
-        <main>{children}</main>
+        <Providers>
+          <main>{children}</main>
+          <QuoteBar />
+        </Providers>
         <Footer settings={settings} />
         <Analytics />
         <SpeedInsights />

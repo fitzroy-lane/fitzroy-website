@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { CheckCircle } from 'lucide-react'
+import { CheckCircle, Trash2 } from 'lucide-react'
 import { submitEnquiry } from '@/app/contact/actions'
+import { useQuote } from '@/contexts/QuoteContext'
 
 const INTEREST_OPTIONS = [
   'Corporate Morning Tea',
@@ -20,14 +21,19 @@ export default function EnquiryForm() {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
   const formRef = useRef<HTMLFormElement>(null)
+  const { items, removeItem, clearQuote } = useQuote()
 
   async function handleSubmit(formData: FormData) {
     setPending(true)
     setError('')
+    if (items.length > 0) {
+      formData.set('selectedItems', items.map((i) => `${i.name}${i.quantity ? ` (${i.quantity})` : ''} — $${i.price}`).join('\n'))
+    }
     try {
       const result = await submitEnquiry(formData)
       if (result.success) {
         setSuccess(true)
+        clearQuote()
         formRef.current?.reset()
       } else {
         setError(result.error || 'Something went wrong. Please try again or email us directly.')
@@ -151,6 +157,46 @@ export default function EnquiryForm() {
           />
         </div>
       </div>
+
+      {items.length > 0 && (
+        <div>
+          <label className="block font-inter text-xs uppercase tracking-wider text-fitzroy-taupe mb-2">
+            Items from your quote
+          </label>
+          <div className="border border-fitzroy-sage/40 bg-fitzroy-sage/5 divide-y divide-fitzroy-sand">
+            {items.map((item) => (
+              <div key={item.id} className="flex items-center justify-between gap-4 px-4 py-2.5">
+                <div className="min-w-0">
+                  <p className="font-inter text-sm text-fitzroy-charcoal leading-snug">{item.name}</p>
+                  {item.quantity && (
+                    <p className="font-inter text-xs text-fitzroy-stone">{item.quantity}</p>
+                  )}
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <span className="font-playfair text-fitzroy-charcoal">${item.price}</span>
+                  <button
+                    type="button"
+                    onClick={() => removeItem(item.id)}
+                    className="text-fitzroy-stone hover:text-fitzroy-clay transition-colors"
+                    aria-label={`Remove ${item.name}`}
+                  >
+                    <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />
+                  </button>
+                </div>
+              </div>
+            ))}
+            <div className="px-4 py-2.5 flex justify-between items-center bg-fitzroy-sage/10">
+              <span className="font-inter text-xs text-fitzroy-taupe">Estimated total</span>
+              <span className="font-playfair text-fitzroy-charcoal">
+                ${items.reduce((s, i) => s + i.price, 0).toLocaleString()}
+              </span>
+            </div>
+          </div>
+          <p className="font-inter text-xs text-fitzroy-stone mt-1.5">
+            We&apos;ll confirm the final price when we contact you.
+          </p>
+        </div>
+      )}
 
       <div>
         <label className="block font-inter text-xs uppercase tracking-wider text-fitzroy-taupe mb-2">

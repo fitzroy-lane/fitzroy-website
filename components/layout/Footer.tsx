@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { SiteSettings } from '@/lib/types'
@@ -25,8 +26,13 @@ export default function Footer({ settings }: FooterProps) {
           {/* Brand */}
           <div>
             <div className="mb-4">
-              <span className="font-playfair text-fitzroy-cream text-2xl tracking-wide block">Fitzroy</span>
-              <span className="font-inter text-fitzroy-stone text-[10px] uppercase tracking-[0.3em]">Catering</span>
+              <Image
+                src="/logos/logo-white.png"
+                alt="Fitzroy Catering"
+                width={160}
+                height={64}
+                className="h-12 w-auto"
+              />
             </div>
             <p className="font-inter text-sm leading-relaxed text-fitzroy-stone max-w-xs">
               Professional, reliable, restaurant-quality catering for corporate, community, and private events across Western Sydney.
