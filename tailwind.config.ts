@@ -11,11 +11,11 @@ const config: Config = {
       colors: {
         'fitzroy-charcoal': '#231F20',
         'fitzroy-stone': '#B9AC9C',
-        'fitzroy-sage': '#5E685F',
+        'fitzroy-sage': '#7A8172',
         'fitzroy-cream': '#F7F5F2',
         'fitzroy-sand': '#D8CBB8',
         'fitzroy-taupe': '#706248',
-        'fitzroy-olive': '#7A8172',
+        'fitzroy-olive': '#5E685F',
         'fitzroy-mushroom': '#CFC6BB',
         'fitzroy-bronze': '#9B7B5A',
         'fitzroy-clay': '#A06D5D',
