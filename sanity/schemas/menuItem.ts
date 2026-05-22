@@ -73,6 +73,13 @@ export const menuItem = defineType({
       description: 'Uncheck to temporarily hide this item from the menu',
     }),
     defineField({
+      name: 'image',
+      title: 'Photo',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Optional — shown as a thumbnail beside the item on the menu page',
+    }),
+    defineField({
       name: 'order',
       title: 'Display Order',
       type: 'number',
@@ -83,7 +90,7 @@ export const menuItem = defineType({
     { title: 'Category + Order', name: 'categoryOrder', by: [{ field: 'category', direction: 'asc' }, { field: 'order', direction: 'asc' }] },
   ],
   preview: {
-    select: { title: 'name', subtitle: 'category' },
+    select: { title: 'name', subtitle: 'category', media: 'image' },
     prepare(selection: Record<string, string>) {
       const categoryLabels: Record<string, string> = {
         hot_platter: 'Hot Platter',
@@ -95,6 +102,7 @@ export const menuItem = defineType({
       return {
         title: selection.title,
         subtitle: categoryLabels[selection.subtitle] ?? selection.subtitle,
+        media: selection.media,
       }
     },
   },

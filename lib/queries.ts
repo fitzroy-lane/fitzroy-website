@@ -24,14 +24,20 @@ export const PARTY_PACKAGES_QUERY = `
 export const MENU_ITEMS_QUERY = `
   *[_type == "menuItem" && available != false] | order(order asc) {
     _id, name, category, description, quantity, price,
-    dietary, requiresAdvanceNotice, order
+    dietary, requiresAdvanceNotice, image, order
   }
 `
 
 export const MENU_ITEMS_BY_CATEGORY_QUERY = `
   *[_type == "menuItem" && available != false && category == $category] | order(order asc) {
     _id, name, category, description, quantity, price,
-    dietary, requiresAdvanceNotice, order
+    dietary, requiresAdvanceNotice, image, order
+  }
+`
+
+export const MENU_CATEGORY_IMAGES_QUERY = `
+  *[_type == "menuCategory"] {
+    _id, category, image
   }
 `
 

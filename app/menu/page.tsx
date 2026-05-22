@@ -3,8 +3,8 @@ import { Metadata } from 'next'
 import PageHeader from '@/components/ui/PageHeader'
 import MenuSection from '@/components/ui/MenuSection'
 import { sanityFetch } from '@/lib/sanity'
-import { MENU_ITEMS_QUERY } from '@/lib/queries'
-import { MenuItem } from '@/lib/types'
+import { MENU_ITEMS_QUERY, MENU_CATEGORY_IMAGES_QUERY } from '@/lib/queries'
+import { MenuItem, MenuCategoryImage } from '@/lib/types'
 
 export const metadata: Metadata = {
   title: 'Catering Menu',
@@ -59,7 +59,10 @@ const STATIC_MENU: MenuItem[] = [
 ]
 
 export default async function MenuPage() {
-  const cmsItems = await sanityFetch<MenuItem[]>({ query: MENU_ITEMS_QUERY, revalidate: 300 }).catch(() => [])
+  const [cmsItems, categoryImages] = await Promise.all([
+    sanityFetch<MenuItem[]>({ query: MENU_ITEMS_QUERY, revalidate: 300 }).catch(() => []),
+    sanityFetch<MenuCategoryImage[]>({ query: MENU_CATEGORY_IMAGES_QUERY, revalidate: 300 }).catch(() => []),
+  ])
   const menuItems = cmsItems.length > 0 ? cmsItems : STATIC_MENU
 
   return (
@@ -85,12 +88,14 @@ export default async function MenuPage() {
 
           {CATEGORIES.map(({ key, label, note }) => {
             const items = menuItems.filter((item) => item.category === key)
+            const catImage = categoryImages.find((c) => c.category === key)?.image
             return (
               <MenuSection
                 key={key}
                 title={label}
                 items={items}
                 note={note}
+                categoryImage={catImage}
               />
             )
           })}

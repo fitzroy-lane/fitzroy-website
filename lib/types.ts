@@ -91,7 +91,14 @@ export interface MenuItem {
   dietary?: string[]
   requiresAdvanceNotice?: boolean
   available?: boolean
+  image?: SanityImage
   order?: number
+}
+
+export interface MenuCategoryImage {
+  _id: string
+  category: string
+  image?: SanityImage
 }
 
 export interface GalleryImage {

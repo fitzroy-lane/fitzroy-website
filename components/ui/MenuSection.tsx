@@ -1,13 +1,16 @@
 'use client'
 
+import Image from 'next/image'
 import { Plus, Check } from 'lucide-react'
-import { MenuItem } from '@/lib/types'
+import { MenuItem, SanityImage } from '@/lib/types'
 import { useQuote } from '@/contexts/QuoteContext'
+import { urlFor } from '@/lib/sanity'
 
 interface MenuSectionProps {
   title: string
   items: MenuItem[]
   note?: string
+  categoryImage?: SanityImage
 }
 
 const DIETARY_LABELS: Record<string, string> = {
@@ -17,23 +20,70 @@ const DIETARY_LABELS: Record<string, string> = {
   VG: 'VG',
 }
 
-export default function MenuSection({ title, items, note }: MenuSectionProps) {
+export default function MenuSection({ title, items, note, categoryImage }: MenuSectionProps) {
   const { addItem, removeItem, isInQuote } = useQuote()
 
   if (items.length === 0) return null
 
   return (
-    <div className="mb-12">
-      <div className="flex items-center gap-4 mb-6">
-        <h2 className="font-playfair text-2xl lg:text-3xl text-fitzroy-charcoal whitespace-nowrap">{title}</h2>
-        <div className="flex-1 h-px bg-fitzroy-sand" />
-        {note && <p className="font-inter text-xs text-fitzroy-stone whitespace-nowrap">{note}</p>}
-      </div>
+    <div className="mb-14">
+      {/* Category header image */}
+      {categoryImage && (
+        <div className="relative w-full h-48 lg:h-60 overflow-hidden mb-6">
+          <Image
+            src={urlFor(categoryImage).width(1200).height(480).url()}
+            alt={title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 1200px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-fitzroy-charcoal/70 via-fitzroy-charcoal/30 to-transparent" />
+          <div className="absolute inset-0 flex items-end p-6">
+            <h2 className="font-playfair text-2xl lg:text-3xl text-fitzroy-cream [text-shadow:0_2px_8px_rgba(0,0,0,0.4)]">
+              {title}
+            </h2>
+          </div>
+        </div>
+      )}
+
+      {/* Section title (shown when no category image) */}
+      {!categoryImage && (
+        <div className="flex items-center gap-4 mb-6">
+          <h2 className="font-playfair text-2xl lg:text-3xl text-fitzroy-charcoal whitespace-nowrap">
+            {title}
+          </h2>
+          <div className="flex-1 h-px bg-fitzroy-sand" />
+          {note && <p className="font-inter text-xs text-fitzroy-stone whitespace-nowrap">{note}</p>}
+        </div>
+      )}
+
+      {/* Note shown below image header */}
+      {categoryImage && note && (
+        <p className="font-inter text-xs text-fitzroy-stone mb-4 -mt-2">{note}</p>
+      )}
+
       <div className="divide-y divide-fitzroy-sand">
         {items.map((item) => {
           const inQuote = isInQuote(item._id)
+          const thumbUrl = item.image
+            ? urlFor(item.image).width(160).height(160).url()
+            : null
+
           return (
-            <div key={item._id} className="py-4 flex items-start justify-between gap-4">
+            <div key={item._id} className="py-4 flex items-start gap-4">
+              {/* Per-item thumbnail */}
+              {thumbUrl && (
+                <div className="relative w-16 h-16 lg:w-20 lg:h-20 shrink-0 overflow-hidden bg-fitzroy-sand/30">
+                  <Image
+                    src={thumbUrl}
+                    alt={item.name}
+                    fill
+                    className="object-cover"
+                    sizes="80px"
+                  />
+                </div>
+              )}
+
               <div className="flex-1 min-w-0">
                 <div className="flex items-start gap-2 flex-wrap">
                   <span className="font-inter font-medium text-fitzroy-charcoal text-sm leading-snug">
@@ -52,6 +102,7 @@ export default function MenuSection({ title, items, note }: MenuSectionProps) {
                   <p className="font-inter text-xs text-fitzroy-stone/70 mt-0.5">{item.quantity}</p>
                 )}
               </div>
+
               <div className="flex items-center gap-3 shrink-0">
                 <span className="font-playfair text-fitzroy-charcoal text-lg">${item.price}</span>
                 <button

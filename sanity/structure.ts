@@ -27,6 +27,10 @@ export const structure = (S: StructureBuilder) =>
         .title('Menu Items')
         .icon(() => '🍽️')
         .child(S.documentTypeList('menuItem').title('Menu Items')),
+      S.listItem()
+        .title('Menu Category Images')
+        .icon(() => '🖼️')
+        .child(S.documentTypeList('menuCategory').title('Menu Category Images')),
       S.divider(),
       S.listItem()
         .title('Gallery')
