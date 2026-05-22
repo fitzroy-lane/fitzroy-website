@@ -45,7 +45,7 @@ export default function Navbar({ promoBannerText }: NavbarProps) {
       } ${transparent ? 'bg-transparent' : 'bg-fitzroy-charcoal shadow-md'}`}
     >
       <div className="container-site">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="flex items-center justify-between h-24 lg:h-28">
           {/* Logo */}
           <Link href="/" onClick={() => setMenuOpen(false)}>
             <Image
@@ -53,7 +53,7 @@ export default function Navbar({ promoBannerText }: NavbarProps) {
               alt="Fitzroy Catering"
               width={140}
               height={56}
-              className="h-10 w-auto lg:h-12"
+              className="h-16 w-auto lg:h-20"
               priority
             />
           </Link>
