@@ -3,14 +3,15 @@ import Link from 'next/link'
 import { Metadata } from 'next'
 import { Building2, PartyPopper, Users } from 'lucide-react'
 import HeroSection from '@/components/ui/HeroSection'
-import { CorporatePackageCard } from '@/components/ui/PackageCard'
+import { CorporatePackageCard, PartyPackageCard } from '@/components/ui/PackageCard'
 import { sanityFetch, urlFor } from '@/lib/sanity'
 import {
   SITE_SETTINGS_QUERY,
   FEATURED_CORPORATE_PACKAGES_QUERY,
+  PARTY_PACKAGES_QUERY,
   FEATURED_GALLERY_QUERY,
 } from '@/lib/queries'
-import { SiteSettings, CorporatePackage, GalleryImage } from '@/lib/types'
+import { SiteSettings, CorporatePackage, PartyPackage, GalleryImage } from '@/lib/types'
 
 export const metadata: Metadata = {
   title: 'Fitzroy Catering — Restaurant-Quality Catering for Western Sydney',
@@ -18,9 +19,10 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
-  const [settings, featuredPackages, gallery] = await Promise.all([
+  const [settings, featuredPackages, partyPackages, gallery] = await Promise.all([
     sanityFetch<SiteSettings>({ query: SITE_SETTINGS_QUERY, revalidate: 300 }).catch(() => null),
     sanityFetch<CorporatePackage[]>({ query: FEATURED_CORPORATE_PACKAGES_QUERY, revalidate: 300 }).catch(() => []),
+    sanityFetch<PartyPackage[]>({ query: PARTY_PACKAGES_QUERY, revalidate: 300 }).catch(() => []),
     sanityFetch<GalleryImage[]>({ query: FEATURED_GALLERY_QUERY, revalidate: 300 }).catch(() => []),
   ])
 
@@ -30,9 +32,25 @@ export default async function HomePage() {
     <>
       <HeroSection settings={settings} />
 
-      {/* Service pillars */}
+      {/* Intro + event types */}
       <section className="bg-fitzroy-charcoal">
-        <div className="container-site py-16">
+        <div className="container-site pt-16 pb-0">
+          <div className="text-center mb-12">
+            <p className="section-label text-fitzroy-stone mb-3">Western Sydney Catering</p>
+            <h1 className="font-playfair text-3xl lg:text-5xl text-fitzroy-cream mb-5 leading-tight">
+              Restaurant-Quality Catering<br className="hidden lg:block" /> for Western Sydney
+            </h1>
+            <p className="font-inter text-fitzroy-stone text-sm lg:text-base max-w-xl mx-auto leading-relaxed mb-8">
+              Professional, reliable catering for corporate, community, and private events. Backed by an established restaurant since 2022.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link href="/contact" className="btn-primary">Get a Quote</Link>
+              <Link href="/menu" className="btn-outline-light">View Full Menu</Link>
+            </div>
+          </div>
+        </div>
+        {/* Event type tiles */}
+        <div className="container-site pb-0">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-fitzroy-stone/20">
             {[
               {
@@ -55,7 +73,7 @@ export default async function HomePage() {
               },
             ].map(({ Icon, title, desc, href }) => (
               <Link key={title} href={href}
-                className="bg-fitzroy-charcoal p-8 lg:p-10 group hover:bg-fitzroy-charcoal/80 transition-colors">
+                className="bg-fitzroy-charcoal/80 p-8 lg:p-10 group hover:bg-fitzroy-stone/10 transition-colors">
                 <Icon className="w-7 h-7 text-fitzroy-bronze mb-5" strokeWidth={1.5} />
                 <h3 className="font-playfair text-xl text-fitzroy-cream mb-3">{title}</h3>
                 <p className="font-inter text-sm text-fitzroy-stone leading-relaxed">{desc}</p>
@@ -94,6 +112,35 @@ export default async function HomePage() {
           </div>
         </section>
       )}
+
+      {/* Private event packages */}
+      <section className="bg-fitzroy-sand/20 py-20">
+        <div className="container-site">
+          <div className="text-center mb-12">
+            <p className="section-label mb-2">Private Events</p>
+            <h2 className="font-playfair text-3xl lg:text-4xl text-fitzroy-charcoal">
+              Private Event Catering Packages
+            </h2>
+            <p className="font-inter text-fitzroy-taupe mt-3 max-w-xl mx-auto text-sm leading-relaxed">
+              Birthdays, celebrations, wakes, and private gatherings. Pre-planned packages with optional setup, styling, and staffing.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {(partyPackages.length > 0 ? partyPackages : [
+              { _id: 'p1', title: 'Package 1', slug: { current: 'p1' }, price: 900, serveNote: 'Serves approx. 30–40 guests', tagline: 'The essentials', inclusions: ['1 × Antipasto Platter', '4 × Hot Food Platters', "Chef's Selection of Cakes & Slices", 'Delivery Included'], order: 1 },
+              { _id: 'p2', title: 'Package 2', slug: { current: 'p2' }, price: 1800, serveNote: 'Serves approx. 50–60 guests', tagline: 'The celebration', inclusions: ['1 × Antipasto Platter', '4 × Hot Food Platters', '1 × Pizza Pack', '1 × Pasta Pack', '1 × Petit Fours & Macarons', 'Delivery Included'], order: 2 },
+              { _id: 'p3', title: 'Package 3', slug: { current: 'p3' }, price: 2500, serveNote: 'Serves approx. 80–100 guests', tagline: 'The full spread', inclusions: ['1 × Antipasto Platter', '6 × Hot Food Platters', '2 × Cold Food Platters', '2 × Pizza Packs', '2 × Pasta Packs', '1 × Seasonal Fruit Platter', '1 × Premium Petit Fours & Macarons', 'Delivery Included'], order: 3 },
+            ] as PartyPackage[]).map((pkg) => (
+              <PartyPackageCard key={pkg._id} pkg={pkg} />
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <Link href="/packages" className="btn-outline">
+              View Event Packages
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* About strip */}
       <section className="bg-fitzroy-sand/30 py-20">

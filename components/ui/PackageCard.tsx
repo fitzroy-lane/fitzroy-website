@@ -65,8 +65,12 @@ export function PartyPackageCard({ pkg }: PartyPackageCardProps) {
         </div>
       )}
       <div className="p-6 flex flex-col flex-1">
+        {pkg.tagline && <p className="section-label mb-1">{pkg.tagline}</p>}
         <h3 className="font-playfair text-xl text-fitzroy-charcoal mb-1">{pkg.title}</h3>
-        {pkg.serveNote && <p className="font-inter text-xs text-fitzroy-stone mb-3">{pkg.serveNote}</p>}
+        {pkg.serveNote && <p className="font-inter text-xs text-fitzroy-stone mb-2">{pkg.serveNote}</p>}
+        {pkg.description && (
+          <p className="font-inter text-sm text-fitzroy-taupe leading-relaxed mb-3">{pkg.description}</p>
+        )}
         {pkg.inclusions && pkg.inclusions.length > 0 && (
           <ul className="space-y-1.5 mb-4 flex-1">
             {pkg.inclusions.map((item, i) => (

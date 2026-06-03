@@ -73,13 +73,13 @@ export default function MenuSection({ title, items, note, categoryImage }: MenuS
             <div key={item._id} className="py-4 flex items-start gap-4">
               {/* Per-item thumbnail */}
               {thumbUrl && (
-                <div className="relative w-16 h-16 lg:w-20 lg:h-20 shrink-0 overflow-hidden bg-fitzroy-sand/30">
+                <div className="relative w-24 h-24 lg:w-28 lg:h-28 shrink-0 overflow-hidden bg-fitzroy-sand/30">
                   <Image
                     src={thumbUrl}
                     alt={item.name}
                     fill
                     className="object-cover"
-                    sizes="80px"
+                    sizes="112px"
                   />
                 </div>
               )}
@@ -103,7 +103,7 @@ export default function MenuSection({ title, items, note, categoryImage }: MenuS
                 )}
               </div>
 
-              <div className="flex items-center gap-3 shrink-0">
+              <div className="flex flex-col items-end gap-2 shrink-0">
                 <span className="font-playfair text-fitzroy-charcoal text-lg">${item.price}</span>
                 <button
                   onClick={() =>
@@ -117,16 +117,16 @@ export default function MenuSection({ title, items, note, categoryImage }: MenuS
                         })
                   }
                   aria-label={inQuote ? `Remove ${item.name} from quote` : `Add ${item.name} to quote`}
-                  className={`w-7 h-7 flex items-center justify-center border transition-colors duration-150 ${
+                  className={`flex items-center gap-1.5 border px-3 py-1.5 transition-colors duration-150 font-inter text-xs whitespace-nowrap ${
                     inQuote
                       ? 'bg-fitzroy-sage border-fitzroy-sage text-white'
                       : 'border-fitzroy-sand text-fitzroy-stone hover:border-fitzroy-sage hover:text-fitzroy-sage'
                   }`}
                 >
                   {inQuote ? (
-                    <Check className="w-3.5 h-3.5" strokeWidth={2.5} />
+                    <><Check className="w-3 h-3" strokeWidth={2.5} /> Added</>
                   ) : (
-                    <Plus className="w-3.5 h-3.5" strokeWidth={2} />
+                    <><Plus className="w-3 h-3" strokeWidth={2} /> Add to Quote</>
                   )}
                 </button>
               </div>

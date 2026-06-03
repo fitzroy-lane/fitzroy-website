@@ -1,7 +1,9 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import PageHeader from '@/components/ui/PageHeader'
-import { sanityFetch } from '@/lib/sanity'
+import ElevateSection from '@/components/ui/ElevateSection'
+import { sanityFetch, urlFor } from '@/lib/sanity'
 import { CORPORATE_PACKAGES_QUERY, SITE_SETTINGS_QUERY } from '@/lib/queries'
 import { CorporatePackage, SiteSettings } from '@/lib/types'
 
@@ -190,11 +192,15 @@ export default async function CorporatePage() {
           </div>
         </div>
       </section>
+
+      <ElevateSection />
     </>
   )
 }
 
 function PackageBlock({ pkg }: { pkg: CorporatePackage }) {
+  const imageUrl = pkg.image ? urlFor(pkg.image).width(600).height(400).url() : null
+
   return (
     <div className="bg-white border border-fitzroy-sand">
       {pkg.promotion && (
@@ -204,12 +210,32 @@ function PackageBlock({ pkg }: { pkg: CorporatePackage }) {
       )}
       <div className="p-6 lg:p-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Info */}
-          <div className="lg:col-span-2">
+
+          {/* Col 1: name + photo */}
+          <div>
             {pkg.tagline && <p className="section-label mb-1">{pkg.tagline}</p>}
             <h3 className="font-playfair text-2xl text-fitzroy-charcoal mb-4">{pkg.title}</h3>
+            {imageUrl ? (
+              <div className="relative h-44 overflow-hidden">
+                <Image
+                  src={imageUrl}
+                  alt={pkg.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 33vw"
+                />
+              </div>
+            ) : (
+              <div className="h-44 bg-fitzroy-sand/30 flex items-center justify-center">
+                <span className="font-inter text-xs text-fitzroy-stone">No photo yet</span>
+              </div>
+            )}
+          </div>
+
+          {/* Col 2: inclusions */}
+          <div className="flex flex-col justify-center">
             {pkg.inclusions && pkg.inclusions.length > 0 && (
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-6">
+              <ul className="space-y-2">
                 {pkg.inclusions.map((item, i) => (
                   <li key={i} className="font-inter text-sm text-fitzroy-taupe flex gap-2">
                     <span className="text-fitzroy-bronze shrink-0 mt-0.5">—</span>
@@ -219,7 +245,8 @@ function PackageBlock({ pkg }: { pkg: CorporatePackage }) {
               </ul>
             )}
           </div>
-          {/* Pricing + CTA */}
+
+          {/* Col 3: pricing + CTA */}
           <div className="flex flex-col justify-between">
             {pkg.pricingTiers && pkg.pricingTiers.length > 0 && (
               <table className="w-full text-sm font-inter mb-4">
@@ -243,6 +270,7 @@ function PackageBlock({ pkg }: { pkg: CorporatePackage }) {
               Schedule Now
             </Link>
           </div>
+
         </div>
       </div>
     </div>

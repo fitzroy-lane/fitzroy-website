@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -18,19 +18,9 @@ interface NavbarProps {
 
 export default function Navbar({ promoBannerText }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
-  const isHome = pathname === '/'
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   if (pathname?.startsWith('/studio')) return null
-
-  const transparent = isHome && !scrolled && !menuOpen
 
   return (
     <>
@@ -40,9 +30,9 @@ export default function Navbar({ promoBannerText }: NavbarProps) {
         </div>
       )}
     <header
-      className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
+      className={`fixed left-0 right-0 z-40 bg-fitzroy-charcoal shadow-md ${
         promoBannerText ? 'top-8' : 'top-0'
-      } ${transparent ? 'bg-transparent' : 'bg-fitzroy-charcoal shadow-md'}`}
+      }`}
     >
       <div className="container-site">
         <div className="flex items-center justify-between h-24 lg:h-28">
