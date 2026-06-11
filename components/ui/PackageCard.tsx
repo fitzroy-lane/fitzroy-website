@@ -66,12 +66,13 @@ export function PartyPackageCard({ pkg }: PartyPackageCardProps) {
       )}
       <div className="p-6 flex flex-col flex-1">
         {pkg.tagline && <p className="section-label mb-1">{pkg.tagline}</p>}
-        <h3 className="font-playfair text-xl text-fitzroy-charcoal mb-2">{pkg.title}</h3>
+        <h3 className="font-playfair text-xl text-fitzroy-charcoal mb-1">{pkg.title}</h3>
+        {pkg.serveNote && <p className="font-inter text-xs text-fitzroy-stone mb-2">{pkg.serveNote}</p>}
         {pkg.description && (
           <p className="font-inter text-sm text-fitzroy-taupe leading-relaxed mb-3">{pkg.description}</p>
         )}
         {pkg.inclusions && pkg.inclusions.length > 0 && (
-          <ul className="space-y-1.5 mb-5 flex-1">
+          <ul className="space-y-1.5 mb-4 flex-1">
             {pkg.inclusions.map((item, i) => (
               <li key={i} className="font-inter text-sm text-fitzroy-taupe flex gap-2">
                 <span className="text-fitzroy-bronze shrink-0">—</span>
@@ -80,20 +81,11 @@ export function PartyPackageCard({ pkg }: PartyPackageCardProps) {
             ))}
           </ul>
         )}
-        {/* Price panel */}
-        <div className="mt-auto -mx-6 -mb-6 px-6 py-5 bg-fitzroy-sand/30 border-t border-fitzroy-sand">
-          <div className="flex items-end justify-between gap-3 mb-2">
-            <div className="leading-none">
-              <span className="font-inter text-xs text-fitzroy-stone block mb-0.5">From</span>
-              <span className="font-playfair text-fitzroy-charcoal text-3xl">${pkg.price.toLocaleString()}</span>
-            </div>
-            <Link href="/contact" className="btn-primary text-xs py-2.5 px-5">
-              Enquire
-            </Link>
-          </div>
-          <p className="font-inter text-xs text-fitzroy-stone leading-relaxed">
-            {pkg.serveNote ? `${pkg.serveNote}. ` : ''}Approximate price — final cost may vary depending on the platters you select.
-          </p>
+        <div className="mt-auto pt-3 border-t border-fitzroy-sand flex items-center justify-between">
+          <span className="font-playfair text-fitzroy-charcoal text-2xl">${pkg.price.toLocaleString()}</span>
+          <Link href="/contact" className="btn-primary text-xs py-2 px-4">
+            Enquire
+          </Link>
         </div>
       </div>
     </div>

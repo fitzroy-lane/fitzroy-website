@@ -200,6 +200,7 @@ export default async function CorporatePage() {
 
 function PackageBlock({ pkg }: { pkg: CorporatePackage }) {
   const imageUrl = pkg.image ? urlFor(pkg.image).width(600).height(400).url() : null
+  const fromPrice = pkg.pricingTiers?.reduce((min, t) => Math.min(min, t.price), Infinity)
 
   return (
     <div className="bg-white border border-fitzroy-sand">
@@ -247,24 +248,15 @@ function PackageBlock({ pkg }: { pkg: CorporatePackage }) {
           </div>
 
           {/* Col 3: pricing + CTA */}
-          <div className="flex flex-col justify-between">
-            {pkg.pricingTiers && pkg.pricingTiers.length > 0 && (
-              <table className="w-full text-sm font-inter mb-4">
-                <thead>
-                  <tr className="border-b border-fitzroy-sand">
-                    <th className="text-left text-xs uppercase tracking-wider text-fitzroy-stone pb-2 font-medium">Staff</th>
-                    <th className="text-right text-xs uppercase tracking-wider text-fitzroy-stone pb-2 font-medium">Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {pkg.pricingTiers.map((tier) => (
-                    <tr key={tier.staffCount} className="border-b border-fitzroy-sand/50">
-                      <td className="py-2 text-fitzroy-taupe">{tier.staffCount} staff</td>
-                      <td className="py-2 text-right font-playfair text-fitzroy-charcoal text-lg">${tier.price.toLocaleString()}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <div className="flex flex-col justify-center bg-fitzroy-sand/30 p-5 -m-1 lg:-my-2">
+            {fromPrice !== undefined && fromPrice !== Infinity && (
+              <div className="mb-4">
+                <span className="font-inter text-xs uppercase tracking-wider text-fitzroy-stone block mb-1">From</span>
+                <span className="font-playfair text-fitzroy-charcoal text-4xl">${fromPrice.toLocaleString()}</span>
+                <p className="font-inter text-xs text-fitzroy-stone mt-2 leading-relaxed">
+                  Approximate price for 15 staff. Total cost may be a little higher depending on the platters you select.
+                </p>
+              </div>
             )}
             <Link href="/contact" className="btn-primary text-center text-xs">
               Schedule Now
