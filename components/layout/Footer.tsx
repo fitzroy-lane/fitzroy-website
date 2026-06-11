@@ -65,7 +65,7 @@ export default function Footer({ settings }: FooterProps) {
             <ul className="space-y-2">
               {[
                 { href: '/corporate', label: 'Corporate Catering' },
-                { href: '/packages', label: 'Party Packages' },
+                { href: '/packages', label: 'Event Packages' },
                 { href: '/menu', label: 'Catering Menu' },
                 { href: '/about', label: 'About Us' },
                 { href: '/contact', label: 'Get a Quote' },

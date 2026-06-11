@@ -2,7 +2,7 @@ import { defineField, defineType } from 'sanity'
 
 export const partyPackage = defineType({
   name: 'partyPackage',
-  title: 'Party Package',
+  title: 'Event Package',
   type: 'document',
   fields: [
     defineField({

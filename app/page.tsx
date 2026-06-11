@@ -122,7 +122,7 @@ export default async function HomePage() {
               Private Event Catering Packages
             </h2>
             <p className="font-inter text-fitzroy-taupe mt-3 max-w-xl mx-auto text-sm leading-relaxed">
-              Birthdays, celebrations, wakes, and private gatherings. Pre-planned packages with optional setup, styling, and staffing.
+              Birthdays, celebrations, a Celebration of Life, and private gatherings. Pre-planned packages with optional setup, styling, and staffing.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -229,7 +229,7 @@ export default async function HomePage() {
           <p className="section-label text-fitzroy-stone mb-3">Delivery Area</p>
           <h2 className="font-playfair text-3xl text-fitzroy-cream mb-4">Servicing Western Sydney</h2>
           <p className="font-inter text-fitzroy-stone text-sm max-w-2xl mx-auto leading-relaxed mb-3">
-            {settings?.serviceAreaText || 'Based in Seven Hills, we service a 20km+ radius including Blacktown, Parramatta, Bella Vista, Castle Hill, Norwest, Baulkham Hills, and surrounding suburbs.'}
+            {settings?.serviceAreaText || 'Based in Seven Hills, we service a 15km radius including Blacktown, Parramatta, Bella Vista, Castle Hill, Norwest, Baulkham Hills, and surrounding suburbs.'}
           </p>
           <p className="font-inter text-fitzroy-stone/60 text-xs">
             Not sure if we cover your area? Get in touch and we&apos;ll let you know.

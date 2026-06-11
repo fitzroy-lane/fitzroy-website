@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { Plus, Check } from 'lucide-react'
+import { Plus, Minus } from 'lucide-react'
 import { MenuItem, SanityImage } from '@/lib/types'
 import { useQuote } from '@/contexts/QuoteContext'
 import { urlFor } from '@/lib/sanity'
@@ -21,7 +21,7 @@ const DIETARY_LABELS: Record<string, string> = {
 }
 
 export default function MenuSection({ title, items, note, categoryImage }: MenuSectionProps) {
-  const { addItem, removeItem, isInQuote } = useQuote()
+  const { items: quoteItems, addItem, incrementItem, decrementItem } = useQuote()
 
   if (items.length === 0) return null
 
@@ -64,7 +64,7 @@ export default function MenuSection({ title, items, note, categoryImage }: MenuS
 
       <div className="divide-y divide-fitzroy-sand">
         {items.map((item) => {
-          const inQuote = isInQuote(item._id)
+          const count = quoteItems.find((q) => q.id === item._id)?.count ?? 0
           const thumbUrl = item.image
             ? urlFor(item.image).width(160).height(160).url()
             : null
@@ -105,30 +105,40 @@ export default function MenuSection({ title, items, note, categoryImage }: MenuS
 
               <div className="flex flex-col items-end gap-2 shrink-0">
                 <span className="font-playfair text-fitzroy-charcoal text-lg">${item.price}</span>
-                <button
-                  onClick={() =>
-                    inQuote
-                      ? removeItem(item._id)
-                      : addItem({
-                          id: item._id,
-                          name: item.name,
-                          price: item.price,
-                          quantity: item.quantity,
-                        })
-                  }
-                  aria-label={inQuote ? `Remove ${item.name} from quote` : `Add ${item.name} to quote`}
-                  className={`flex items-center gap-1.5 border px-3 py-1.5 transition-colors duration-150 font-inter text-xs whitespace-nowrap ${
-                    inQuote
-                      ? 'bg-fitzroy-sage border-fitzroy-sage text-white'
-                      : 'border-fitzroy-sand text-fitzroy-stone hover:border-fitzroy-sage hover:text-fitzroy-sage'
-                  }`}
-                >
-                  {inQuote ? (
-                    <><Check className="w-3 h-3" strokeWidth={2.5} /> Added</>
-                  ) : (
-                    <><Plus className="w-3 h-3" strokeWidth={2} /> Add to Quote</>
-                  )}
-                </button>
+                {count === 0 ? (
+                  <button
+                    onClick={() =>
+                      addItem({
+                        id: item._id,
+                        name: item.name,
+                        price: item.price,
+                        quantity: item.quantity,
+                      })
+                    }
+                    aria-label={`Add ${item.name} to quote`}
+                    className="flex items-center gap-1.5 border border-fitzroy-sand text-fitzroy-stone hover:border-fitzroy-sage hover:text-fitzroy-sage px-3 py-1.5 transition-colors duration-150 font-inter text-xs whitespace-nowrap"
+                  >
+                    <Plus className="w-3 h-3" strokeWidth={2} /> Add to Quote
+                  </button>
+                ) : (
+                  <div className="flex items-center border border-fitzroy-sage">
+                    <button
+                      onClick={() => decrementItem(item._id)}
+                      aria-label={`Decrease ${item.name}`}
+                      className="w-8 h-8 flex items-center justify-center text-fitzroy-sage hover:bg-fitzroy-sage/10 transition-colors"
+                    >
+                      <Minus className="w-3 h-3" strokeWidth={2} />
+                    </button>
+                    <span className="w-8 text-center font-inter text-sm text-fitzroy-charcoal">{count}</span>
+                    <button
+                      onClick={() => incrementItem(item._id)}
+                      aria-label={`Increase ${item.name}`}
+                      className="w-8 h-8 flex items-center justify-center text-fitzroy-sage hover:bg-fitzroy-sage/10 transition-colors"
+                    >
+                      <Plus className="w-3 h-3" strokeWidth={2} />
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           )

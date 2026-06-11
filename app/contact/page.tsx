@@ -61,7 +61,7 @@ export default async function ContactPage() {
                 <ul className="space-y-2.5 font-inter text-sm text-fitzroy-taupe">
                   <li className="flex gap-2"><span className="text-fitzroy-bronze shrink-0">—</span>Minimum order $350</li>
                   <li className="flex gap-2"><span className="text-fitzroy-bronze shrink-0">—</span>48 hours minimum notice required</li>
-                  <li className="flex gap-2"><span className="text-fitzroy-bronze shrink-0">—</span>Delivery within ~20km of Seven Hills</li>
+                  <li className="flex gap-2"><span className="text-fitzroy-bronze shrink-0">—</span>Delivery within ~15km of Seven Hills</li>
                   <li className="flex gap-2"><span className="text-fitzroy-bronze shrink-0">—</span>We respond within 24 hours</li>
                   <li className="flex gap-2"><span className="text-fitzroy-bronze shrink-0">—</span>Payment via EFT or Stripe</li>
                 </ul>

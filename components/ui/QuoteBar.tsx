@@ -2,17 +2,17 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ShoppingBasket, X, Trash2 } from 'lucide-react'
+import { ShoppingBasket, X, Trash2, Plus, Minus } from 'lucide-react'
 import { useQuote } from '@/contexts/QuoteContext'
 
 export default function QuoteBar() {
-  const { items, removeItem, clearQuote } = useQuote()
+  const { items, removeItem, incrementItem, decrementItem, clearQuote, totalCount } = useQuote()
   const [open, setOpen] = useState(false)
   const router = useRouter()
 
   if (items.length === 0) return null
 
-  const total = items.reduce((sum, i) => sum + i.price, 0)
+  const total = items.reduce((sum, i) => sum + i.price * i.count, 0)
 
   const handleSendEnquiry = () => {
     setOpen(false)
@@ -28,12 +28,12 @@ export default function QuoteBar() {
             <div className="relative shrink-0">
               <ShoppingBasket className="w-5 h-5 text-fitzroy-sand" strokeWidth={1.5} />
               <span className="absolute -top-1.5 -right-1.5 bg-fitzroy-sage text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                {items.length}
+                {totalCount}
               </span>
             </div>
             <div className="min-w-0">
               <p className="font-inter text-fitzroy-cream text-sm font-medium truncate">
-                {items.length} item{items.length !== 1 ? 's' : ''} in your quote
+                {totalCount} item{totalCount !== 1 ? 's' : ''} in your quote
               </p>
               <p className="font-inter text-fitzroy-stone text-xs">
                 Estimated: ${total.toLocaleString()}
@@ -66,18 +66,38 @@ export default function QuoteBar() {
 
             <div className="overflow-y-auto flex-1 px-6 divide-y divide-fitzroy-sand">
               {items.map((item) => (
-                <div key={item.id} className="py-4 flex items-center justify-between gap-4">
+                <div key={item.id} className="py-4 flex items-center justify-between gap-3">
                   <div className="min-w-0">
                     <p className="font-inter text-sm text-fitzroy-charcoal font-medium leading-snug">
                       {item.name}
                     </p>
-                    {item.quantity && (
-                      <p className="font-inter text-xs text-fitzroy-stone mt-0.5">{item.quantity}</p>
-                    )}
+                    <p className="font-inter text-xs text-fitzroy-stone mt-0.5">
+                      ${item.price}{item.quantity ? ` · ${item.quantity}` : ''} each
+                    </p>
                   </div>
-                  <div className="flex items-center gap-4 shrink-0">
-                    <span className="font-playfair text-lg text-fitzroy-charcoal">
-                      ${item.price}
+                  <div className="flex items-center gap-3 shrink-0">
+                    {/* Quantity stepper */}
+                    <div className="flex items-center border border-fitzroy-sand">
+                      <button
+                        onClick={() => decrementItem(item.id)}
+                        aria-label={`Decrease ${item.name}`}
+                        className="w-7 h-7 flex items-center justify-center text-fitzroy-taupe hover:bg-fitzroy-sand/40 transition-colors"
+                      >
+                        <Minus className="w-3 h-3" strokeWidth={2} />
+                      </button>
+                      <span className="w-7 text-center font-inter text-sm text-fitzroy-charcoal">
+                        {item.count}
+                      </span>
+                      <button
+                        onClick={() => incrementItem(item.id)}
+                        aria-label={`Increase ${item.name}`}
+                        className="w-7 h-7 flex items-center justify-center text-fitzroy-taupe hover:bg-fitzroy-sand/40 transition-colors"
+                      >
+                        <Plus className="w-3 h-3" strokeWidth={2} />
+                      </button>
+                    </div>
+                    <span className="font-playfair text-lg text-fitzroy-charcoal w-16 text-right">
+                      ${(item.price * item.count).toLocaleString()}
                     </span>
                     <button
                       onClick={() => removeItem(item.id)}

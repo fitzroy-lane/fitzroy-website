@@ -151,7 +151,7 @@ export default async function AboutPage() {
             <p className="section-label text-fitzroy-stone mb-2">Delivery</p>
             <h2 className="font-playfair text-3xl text-fitzroy-cream">Service Areas</h2>
             <p className="font-inter text-fitzroy-stone text-sm mt-3 max-w-xl mx-auto">
-              Based in Seven Hills, we service a ~20km radius across Western Sydney.
+              Based in Seven Hills, we service a ~15km radius across Western Sydney.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">

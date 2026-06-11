@@ -19,9 +19,9 @@ export const structure = (S: StructureBuilder) =>
         .icon(() => '🏢')
         .child(S.documentTypeList('corporatePackage').title('Corporate Packages')),
       S.listItem()
-        .title('Party Packages')
+        .title('Event Packages')
         .icon(() => '🎉')
-        .child(S.documentTypeList('partyPackage').title('Party Packages')),
+        .child(S.documentTypeList('partyPackage').title('Event Packages')),
       S.divider(),
       S.listItem()
         .title('Menu Items')

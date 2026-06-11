@@ -11,7 +11,7 @@ const INTEREST_OPTIONS = [
   'Corporate Friday Lunch',
   'Monthly Staff Birthday Package',
   'Individual Staff Birthday Package',
-  'Party Package',
+  'Event Package',
   'Custom Catering',
   'Menu Item / Platter Order',
 ]
@@ -27,7 +27,7 @@ export default function EnquiryForm() {
     setPending(true)
     setError('')
     if (items.length > 0) {
-      formData.set('selectedItems', items.map((i) => `${i.name}${i.quantity ? ` (${i.quantity})` : ''} — $${i.price}`).join('\n'))
+      formData.set('selectedItems', items.map((i) => `${i.count}× ${i.name}${i.quantity ? ` (${i.quantity})` : ''} — $${(i.price * i.count).toLocaleString()}`).join('\n'))
     }
     try {
       const result = await submitEnquiry(formData)
@@ -167,13 +167,15 @@ export default function EnquiryForm() {
             {items.map((item) => (
               <div key={item.id} className="flex items-center justify-between gap-4 px-4 py-2.5">
                 <div className="min-w-0">
-                  <p className="font-inter text-sm text-fitzroy-charcoal leading-snug">{item.name}</p>
+                  <p className="font-inter text-sm text-fitzroy-charcoal leading-snug">
+                    <span className="text-fitzroy-sage font-medium">{item.count}×</span> {item.name}
+                  </p>
                   {item.quantity && (
                     <p className="font-inter text-xs text-fitzroy-stone">{item.quantity}</p>
                   )}
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
-                  <span className="font-playfair text-fitzroy-charcoal">${item.price}</span>
+                  <span className="font-playfair text-fitzroy-charcoal">${(item.price * item.count).toLocaleString()}</span>
                   <button
                     type="button"
                     onClick={() => removeItem(item.id)}
@@ -188,7 +190,7 @@ export default function EnquiryForm() {
             <div className="px-4 py-2.5 flex justify-between items-center bg-fitzroy-sage/10">
               <span className="font-inter text-xs text-fitzroy-taupe">Estimated total</span>
               <span className="font-playfair text-fitzroy-charcoal">
-                ${items.reduce((s, i) => s + i.price, 0).toLocaleString()}
+                ${items.reduce((s, i) => s + i.price * i.count, 0).toLocaleString()}
               </span>
             </div>
           </div>

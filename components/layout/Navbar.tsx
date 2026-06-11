@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation'
 
 const navLinks = [
   { href: '/corporate', label: 'Corporate Catering' },
-  { href: '/packages', label: 'Party Packages' },
+  { href: '/packages', label: 'Event Packages' },
   { href: '/menu', label: 'Catering Menu' },
   { href: '/about', label: 'About' },
 ]

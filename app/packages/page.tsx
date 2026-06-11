@@ -9,7 +9,7 @@ import { PartyPackage } from '@/lib/types'
 
 export const metadata: Metadata = {
   title: 'Event Packages',
-  description: 'Private event catering packages for Western Sydney — birthdays, celebrations, wakes, and gatherings. Flexible options with optional setup, styling, and staffing.',
+  description: 'Private event catering packages for Western Sydney — birthdays, celebrations, a Celebration of Life, and gatherings. Flexible options with optional setup, styling, and staffing.',
 }
 
 const STATIC_PACKAGES: PartyPackage[] = [
@@ -75,7 +75,7 @@ export default async function PackagesPage() {
       <PageHeader
         label="Private Events"
         title="Event Packages"
-        subtitle="From birthdays and family celebrations to wakes and private gatherings. Flexible catering solutions with optional setup and styling."
+        subtitle="From birthdays and family celebrations to a Celebration of Life and private gatherings. Flexible catering solutions with optional setup and styling."
       />
 
       <section className="py-16 lg:py-20 bg-fitzroy-cream">
