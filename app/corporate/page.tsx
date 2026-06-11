@@ -254,7 +254,7 @@ function PackageBlock({ pkg }: { pkg: CorporatePackage }) {
                 <span className="font-inter text-xs uppercase tracking-wider text-fitzroy-stone block mb-1">From</span>
                 <span className="font-playfair text-fitzroy-charcoal text-4xl">${fromPrice.toLocaleString()}</span>
                 <p className="font-inter text-xs text-fitzroy-stone mt-2 leading-relaxed">
-                  Approximate price for 15 staff. Total cost may be a little higher depending on the platters you select.
+                  Approximate price for 15 staff. Total cost may vary.
                 </p>
               </div>
             )}
