@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Metadata } from 'next'
 import PageHeader from '@/components/ui/PageHeader'
 import ElevateSection from '@/components/ui/ElevateSection'
+import AddToQuoteButton from '@/components/ui/AddToQuoteButton'
 import { sanityFetch, urlFor } from '@/lib/sanity'
 import { CORPORATE_PACKAGES_QUERY, SITE_SETTINGS_QUERY } from '@/lib/queries'
 import { CorporatePackage, SiteSettings } from '@/lib/types'
@@ -258,9 +259,13 @@ function PackageBlock({ pkg }: { pkg: CorporatePackage }) {
                 </p>
               </div>
             )}
-            <Link href="/contact" className="btn-primary text-center text-xs">
-              Schedule Now
-            </Link>
+            {fromPrice !== undefined && fromPrice !== Infinity ? (
+              <AddToQuoteButton id={pkg._id} name={pkg.title} price={fromPrice} quantity="Corporate package · from 15 staff" fullWidth />
+            ) : (
+              <Link href="/contact" className="btn-primary text-center text-xs">
+                Enquire
+              </Link>
+            )}
           </div>
 
         </div>

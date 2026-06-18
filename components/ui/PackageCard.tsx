@@ -1,7 +1,7 @@
-import Link from 'next/link'
 import Image from 'next/image'
 import { CorporatePackage, PartyPackage } from '@/lib/types'
 import { urlFor } from '@/lib/sanity'
+import AddToQuoteButton from '@/components/ui/AddToQuoteButton'
 
 interface CorporatePackageCardProps {
   pkg: CorporatePackage
@@ -37,14 +37,16 @@ export function CorporatePackageCard({ pkg, variant = 'default' }: CorporatePack
             ))}
           </ul>
         )}
-        {minPrice !== Infinity && (
+        {minPrice !== undefined && minPrice !== Infinity && (
           <p className="font-inter text-sm text-fitzroy-stone mt-auto pt-3 border-t border-fitzroy-sand">
-            From <span className="font-playfair text-fitzroy-charcoal text-lg">${minPrice}</span>
+            From <span className="font-playfair text-fitzroy-charcoal text-lg">${minPrice.toLocaleString()}</span>
           </p>
         )}
-        <Link href="/contact" className="btn-primary text-center mt-4 text-xs">
-          Enquire Now
-        </Link>
+        <div className="mt-4">
+          {minPrice !== undefined && minPrice !== Infinity ? (
+            <AddToQuoteButton id={pkg._id} name={pkg.title} price={minPrice} quantity="Corporate package · from 15 staff" fullWidth />
+          ) : null}
+        </div>
       </div>
     </div>
   )
@@ -81,11 +83,12 @@ export function PartyPackageCard({ pkg }: PartyPackageCardProps) {
             ))}
           </ul>
         )}
-        <div className="mt-auto pt-3 border-t border-fitzroy-sand flex items-center justify-between">
-          <span className="font-playfair text-fitzroy-charcoal text-2xl">${pkg.price.toLocaleString()}</span>
-          <Link href="/contact" className="btn-primary text-xs py-2 px-4">
-            Enquire
-          </Link>
+        <div className="mt-auto pt-3 border-t border-fitzroy-sand">
+          <div className="leading-none mb-3">
+            <span className="font-inter text-xs text-fitzroy-stone block mb-0.5">From</span>
+            <span className="font-playfair text-fitzroy-charcoal text-2xl">${pkg.price.toLocaleString()}</span>
+          </div>
+          <AddToQuoteButton id={pkg._id} name={pkg.title} price={pkg.price} quantity={pkg.serveNote} fullWidth />
         </div>
       </div>
     </div>

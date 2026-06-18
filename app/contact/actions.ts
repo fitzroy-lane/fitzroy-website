@@ -45,7 +45,7 @@ Guest Count: ${guestCount}
 
 INTERESTED IN
 ${interests.length > 0 ? interests.map((i) => `• ${i}`).join('\n') : 'Not specified'}
-${selectedItems ? `\nSELECTED MENU ITEMS\n${selectedItems.split('\n').map((i) => `• ${i}`).join('\n')}` : ''}
+${selectedItems ? `\nSELECTED ITEMS & PACKAGES\n${selectedItems.split('\n').map((i) => `• ${i}`).join('\n')}` : ''}
 ADDITIONAL DETAILS
 ${message || 'None provided'}
 
